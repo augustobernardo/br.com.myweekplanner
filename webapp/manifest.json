@@ -51,6 +51,10 @@
 				"settings": {
 					"bundleName": "br.com.myweekplanner.i18n.i18n"
 				}
+			},
+			"userSettingsPreference": {
+				"type": "sap.ui.model.json.JSONModel",
+				"preload": true
 			}
 		},
 
@@ -61,19 +65,37 @@
 				"viewPath": "br.com.myweekplanner.view",
 				"controlId": "app",
 				"controlAggregation": "pages",
-				"async": true
+				"async": true,
+				"bypassed": {
+					"target": ["notFound"]
+				}
 			},
 			"routes": [
 				{
-					"pattern": "",
+					"pattern": "home/{userId}",
 					"name": "main",
 					"target": "main"
+				},
+				{
+					"pattern": "notFound",
+					"name": "notFound",
+					"target": "notFound"
 				}
 			],
 			"targets": {
 				"main": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
 					"viewId": "main",
 					"viewName": "Main"
+				},
+				"notFound": {
+					"viewType": "XML",
+					"transition": "show",
+					"clearControlAggregation": false,
+					"viewId": "notFound",
+					"viewName": "NotFound"
 				}
 			}
 		}

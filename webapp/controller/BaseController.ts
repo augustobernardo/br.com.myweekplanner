@@ -6,6 +6,7 @@ import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import Router from "sap/ui/core/routing/Router";
 import History from "sap/ui/core/routing/History";
+import Theming from "sap/ui/core/Theming";
 
 /**
  * @namespace br.com.myweekplanner.controller
@@ -79,5 +80,19 @@ export default abstract class BaseController extends Controller {
 		} else {
 			this.getRouter().navTo("main", {}, undefined, true);
 		}
+	}
+
+	public applyUserThemePreference(): void {
+		const sUserThemePreference = localStorage.getItem("userThemePreference");
+
+		if (sUserThemePreference) {
+			Theming.setTheme(sUserThemePreference);
+			return;
+		}
+		Theming.setTheme(this.getUserThemePreference());
+	}
+
+	public getUserThemePreference(): string {
+		return Theming.getTheme();
 	}
 }

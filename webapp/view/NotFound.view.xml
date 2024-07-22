@@ -1,0 +1,26 @@
+<mvc:View
+	controllerName="br.com.myweekplanner.controller.NotFound"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	displayBlock="true"
+	height="100%"
+	busyIndicatorDelay="0"
+>
+	<Page showHeader="false">
+		<content>
+			<IllustratedMessage
+				title="{i18n>NotFound.title}"
+				illustrationType="sapIllus-PageNotFound"
+				enableVerticalResponsiveness="true"
+				description="{i18n>NotFound.description}">
+				<additionalContent>
+					<Button
+						id="idBackToLoginButton"
+						text="{i18n>NotFound.btn.text.backToLogin}"
+						press="onBackToLogin"
+					/>
+				</additionalContent>
+			</IllustratedMessage>
+		</content>
+	</Page>
+</mvc:View>

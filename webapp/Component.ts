@@ -1,11 +1,20 @@
 import UIComponent from "sap/ui/core/UIComponent";
 import models from "./model/models";
 import Device from "sap/ui/Device";
+import Theming from "sap/ui/core/Theming";
+import Localization from "sap/base/i18n/Localization";
+
+interface IUserSettingsPreference {
+	theme: string;
+	language: string;
+}
 
 /**
  * @namespace br.com.myweekplanner
- */
+*/
 export default class Component extends UIComponent {
+	private _userSettingsPreference: IUserSettingsPreference;
+
 	public static metadata = {
 		manifest: "json",
 	};
@@ -18,6 +27,19 @@ export default class Component extends UIComponent {
 
 		// create the device model
 		this.setModel(models.createDeviceModel(), "device");
+
+		// get the user settings preference
+		this._userSettingsPreference = {
+			theme: this.getUserThemePreference(),
+			language: this.getLanguagePreference(),
+		}
+
+		// save the user settings preference in the user settings browser
+		this.setUserSettingsPreference();
+
+		// apply the user settings preference
+		Theming.setTheme(this._userSettingsPreference.theme);
+		Localization.setLanguage(this._userSettingsPreference.language);
 
 		// create the views based on the url/hash
 		this.getRouter().initialize();
@@ -44,4 +66,40 @@ export default class Component extends UIComponent {
 		}
 		return this.contentDensityClass;
 	}
+
+	private getUserSettingsPreference(): IUserSettingsPreference {
+		const sUserSettingsPreference = localStorage.getItem("userSettingsPreference");
+
+		if (sUserSettingsPreference) {
+			return JSON.parse(sUserSettingsPreference) as IUserSettingsPreference;
+		}
+
+		return {
+			theme: this.getUserThemePreference(),
+			language: this.getLanguagePreference(),
+		};
+	}
+
+	private getUserThemePreference(): string {
+		// get the user theme preference from the user settings browser
+		const sUserThemePreference = localStorage.getItem("userThemePreference");
+
+		if (sUserThemePreference) {
+			return sUserThemePreference;
+		}
+
+		const bDarkTheme = window.matchMedia("(prefers-color-scheme: dark)");
+		return bDarkTheme.matches ? "sap_horizon_dark" : "sap_horizon";
+	}
+
+	private getLanguagePreference(): string {
+
+		const sLanguage = Localization.getLanguage();
+		return sLanguage;
+	}
+
+	private setUserSettingsPreference(): void {
+		localStorage.setItem("userSettingsPreference", JSON.stringify(this._userSettingsPreference));
+	}
+
 }
