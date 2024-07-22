@@ -1,0 +1,19 @@
+{
+  "generator-ui5-ts-app": {
+    "namespace": "br.com.myweekplanner",
+    "framework": "OpenUI5",
+    "frameworkVersion": "1.126.1",
+    "author": "Augusto Oliveira",
+    "initrepo": true,
+    "tstypes": "@openui5/types",
+    "tstypesVersion": "1.126.1",
+    "appId": "br.com.myweekplanner",
+    "appURI": "br/com/myweekplanner",
+    "cdnDomain": "sdk.openui5.org",
+    "defaultTheme": "sap_horizon",
+    "gte1_98_0": true,
+    "gte1_104_0": true,
+    "gte1_115_0": true,
+    "setupCompleted": true
+  }
+}
